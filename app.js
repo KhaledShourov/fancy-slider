@@ -31,7 +31,7 @@ const showImages = (images) => {
 }
 
 const getImages = (query) => {
-  toggleSpinner(true);
+  // toggleSpinner(true);
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
@@ -42,7 +42,7 @@ let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
   element.classList.toggle('added');
- 
+
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
@@ -72,15 +72,15 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  const duration = () =>{
+  const duration = () => {
     const duration = document.getElementById('duration').value || 1000;
     if (duration < 0) {
       alert("Don't enter any minus value next time! [Default = 1000 millisecond]");
       return 1000;
-    }else{
+    } else {
       return duration;
     }
-  } 
+  }
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
@@ -95,6 +95,7 @@ const createSlider = () => {
     changeSlide(slideIndex);
   }, duration());
 }
+
 
 // change slider index 
 const changeItem = index => {
@@ -122,7 +123,7 @@ const changeSlide = (index) => {
   items[index].style.display = "block"
 }
 
-document.getElementById('search').addEventListener('keypress', function(event){
+document.getElementById('search').addEventListener('keypress', function (event) {
   if (event.key === 'Enter') {
     document.getElementById('search-btn').click();
   }
@@ -137,7 +138,7 @@ searchBtn.addEventListener('click', function () {
 })
 
 
-document.getElementById('duration').addEventListener('keypress', function(event){
+document.getElementById('duration').addEventListener('keypress', function (event) {
   if (event.key === 'Enter') {
     document.getElementById('create-slider').click();
   }
@@ -147,19 +148,20 @@ sliderBtn.addEventListener('click', function () {
   createSlider();
 })
 
-const toggleSpinner = (show) => {
-  const spinner = document.getElementById('spinner');
-  if (show) {
-    spinner.classList.remove('d-block');
-  } else {
-    spinner.classList.add('d-none');
-  }
-}
 
-
-const resultImages = (images) =>{
+const resultImages = (images) => {
   const resultImages = document.getElementById('resultImages');
   resultImages.innerHTML = `
     <h4>Total <span style="color: black">${images}</span> images found!</h4>
   `
+}
+
+//spinner
+const toggleSpinner = (show) => {
+  const spinner = document.getElementById('loading-spinner');
+  if (show) {
+    spinner.classList.remove('d-none');
+  } else {
+    spinner.classList.add('d-none');
+  }
 }
